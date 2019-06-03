@@ -4,25 +4,31 @@ import com.stackroute.muzixService.domain.Track;
 import com.stackroute.muzixService.repository.TrackRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
 @Component
+@PropertySource("classpath:application.properties")
 public class CommandLineAppStartupRunner  implements CommandLineRunner {
 
-    private static final Logger logger= LoggerFactory.getLogger(CommandLineAppStartupRunner.class);
-
     private TrackRepository trackRepository;
+
+    @Autowired
+    private Environment env;
 
     public CommandLineAppStartupRunner(TrackRepository trackRepository){
         this.trackRepository=trackRepository;
     }
     @Override
     public void run(String... args) throws Exception {
-        logger.info("Application started with logger", Arrays.toString(args));
-        Track track2=new Track(2,"apna time aayega","gully boy track");
+        Track track2=new Track(Integer.parseInt(env.getProperty("spring.track.trackId2")),env.getProperty("spring.track.trackName2"),
+                env.getProperty("spring.track.comments2"));
         trackRepository.save(track2);
     }
 }
