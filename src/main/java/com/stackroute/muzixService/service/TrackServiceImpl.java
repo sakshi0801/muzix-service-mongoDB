@@ -40,6 +40,7 @@ public class TrackServiceImpl implements TrackService {
         if(trackRepository.findAll()==null){
             throw new TrackNotFoundException("track not found");
         }
+        Iterable<Track> tracklist=trackRepository.findAll();
         return trackRepository.findAll();
     }
 
