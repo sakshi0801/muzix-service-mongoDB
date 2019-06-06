@@ -12,7 +12,7 @@
 	<artifactId>muzix-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>muzixApplication</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Muzix project for Spring Boot</description>
 
 	<properties>
 		<java.version>11</java.version>
@@ -31,22 +31,10 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
-		<!--<dependency>
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.197</version>
-		</dependency>-->
-
-		<!-- Spring JDBC and MySQL Driver -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>5.1.4.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.0.5</version>
 		</dependency>
 
 		<dependency>
@@ -73,6 +61,20 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.23.1-GA</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -80,6 +82,15 @@
 			<version>1.18.2</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!--Cache dependency-->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-cache -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+			<version>2.1.4.RELEASE</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

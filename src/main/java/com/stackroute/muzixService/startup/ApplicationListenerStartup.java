@@ -32,7 +32,7 @@ public class ApplicationListenerStartup implements ApplicationListener<ContextRe
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         Track track1=new Track(trackId,trackName,comments);
-
         trackRepository.save(track1);
+
     }
 }

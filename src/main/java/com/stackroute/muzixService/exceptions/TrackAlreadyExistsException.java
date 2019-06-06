@@ -1,10 +1,10 @@
 package com.stackroute.muzixService.exceptions;
 
-public class TrackNotFoundException extends Exception {
+public class TrackAlreadyExistsException extends Exception {
 
     private String message;
 
-    public TrackNotFoundException(String message) {
+    public TrackAlreadyExistsException(String message) {
         super(message);
         this.message = message;
     }

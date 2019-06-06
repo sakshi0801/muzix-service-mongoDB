@@ -1,7 +1,7 @@
 package com.stackroute.muzixService.controller;
 
 import com.stackroute.muzixService.domain.Track;
-import com.stackroute.muzixService.exceptions.TrackAlreadyExsitsException;
+import com.stackroute.muzixService.exceptions.TrackAlreadyExistsException;
 import com.stackroute.muzixService.exceptions.TrackNotFoundException;
 import com.stackroute.muzixService.service.TrackService;
 import io.swagger.annotations.Api;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @Api(value = "muzixControllerApi",produces = MediaType.APPLICATION_JSON_VALUE)
-@RequestMapping(value = "/api/muzix/")
+@RequestMapping(value = "/api/v1/")
 public class TrackController {
 
     private TrackService trackService;
@@ -29,14 +29,16 @@ public class TrackController {
     }
 
     @PostMapping("track")
-    public ResponseEntity<?> saveTrack(@RequestBody Track track) throws TrackAlreadyExsitsException{
+    @ApiOperation("Save track")
+    @ApiResponses(value = {@ApiResponse(code = 200,message = "OK",response = Track.class)})
+    public ResponseEntity<?> saveTrack(@RequestBody Track track) throws TrackAlreadyExistsException {
         ResponseEntity responseEntity;
         trackService.saveTrack(track);
-        responseEntity=new ResponseEntity<String>("Track successfully added", HttpStatus.OK);
+        responseEntity=new ResponseEntity<String>("Track successfully added", HttpStatus.CREATED);
         return responseEntity;
     }
 
-    @GetMapping("track")
+    @GetMapping("tracks")
     @ApiOperation("Get all tracks")
     @ApiResponses(value = {@ApiResponse(code = 200,message = "OK",response = Track.class)})
     public ResponseEntity<?> getAllTracks() throws TrackNotFoundException{
@@ -60,7 +62,7 @@ public class TrackController {
         return responseEntity;
     }
 
-    @GetMapping("track2/{name}")
+    @GetMapping("trackByName/{name}")
     @ApiOperation("Get all tracks with specific name")
     @ApiResponses(value = {@ApiResponse(code = 200,message = "OK",response = Track.class)})
     public ResponseEntity<?> getTrackByName(@PathVariable("name") String name) throws TrackNotFoundException{
@@ -75,16 +77,20 @@ public class TrackController {
         return responseEntity;
     }
 
-    @PutMapping("track/update/{id}")
-    public ResponseEntity<?> updateComments(@PathVariable("id") int id,@RequestBody Track track) throws TrackNotFoundException{
+    @PutMapping("track")
+    @ApiOperation("update track comments")
+    @ApiResponses(value = {@ApiResponse(code = 200,message = "OK",response = Track.class)})
+    public ResponseEntity<?> updateComments(@RequestBody Track track) throws TrackNotFoundException{
         ResponseEntity responseEntity;
-        trackService.updateComments(id,track);
+        trackService.updateComments(track);
         responseEntity = new ResponseEntity<String>("Track updated", HttpStatus.OK);
         return responseEntity;
     }
 
-    @DeleteMapping("track/delete/{id}")
+    @DeleteMapping("track/{id}")
+    @ApiOperation("delete track with specific id")
+    @ApiResponses(value = {@ApiResponse(code = 200,message = "OK",response = Track.class)})
     public ResponseEntity<?> deleteTrack(@PathVariable("id") int id) throws TrackNotFoundException{
-        return new ResponseEntity<String>(trackService.deleteTrack(id),HttpStatus.OK);
+        return new ResponseEntity<List<Track>>(trackService.deleteTrack(id),HttpStatus.OK);
     }
 }

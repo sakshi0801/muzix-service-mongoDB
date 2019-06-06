@@ -27,8 +27,11 @@ public class CommandLineAppStartupRunner  implements CommandLineRunner {
     }
     @Override
     public void run(String... args) throws Exception {
-        Track track2=new Track(Integer.parseInt(env.getProperty("spring.track.trackId2")),env.getProperty("spring.track.trackName2"),
-                env.getProperty("spring.track.comments2"));
-        trackRepository.save(track2);
+
+        Track track=Track.builder().trackId(Integer.parseInt(env.getProperty("spring.track.trackId2")))
+                .trackName(env.getProperty("spring.track.trackName2"))
+                .comments(env.getProperty("spring.track.comments2"))
+                .build();
+        trackRepository.save(track);
     }
 }
