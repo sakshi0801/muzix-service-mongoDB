@@ -7,4 +7,4 @@ Muzix Service Application
 - Added endpoint to search trackByName, added @Query 
 - Added test cases for all layers
 - Added swagger2
-- Implemented h2 database
+- Implemented mongoDb
