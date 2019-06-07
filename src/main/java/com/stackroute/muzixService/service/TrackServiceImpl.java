@@ -58,18 +58,21 @@ public class TrackServiceImpl implements TrackService {
     public Track getTrackByTrackId(int trackId) throws TrackNotFoundException {
         Track foundTrack=null;
         if(trackRepository.existsById(trackId)){
-            foundTrack=trackRepository.getOne(trackId);
+            foundTrack=trackRepository.findById(trackId).get();
         }
         return foundTrack;
     }
 
+/*
     @Override
     public Track getTrackByName(String trackName) throws TrackNotFoundException {
         Track foundTrack=null;
         foundTrack=trackRepository.getTrackByName(trackName);
         return foundTrack;
     }
+*/
 
+/*
     @Override
     @CacheEvict(allEntries = true)
     public Track updateComments(Track track) throws TrackNotFoundException {
@@ -83,6 +86,7 @@ public class TrackServiceImpl implements TrackService {
         }
         return track1;
     }
+*/
 
     @Override
     @CacheEvict(allEntries = true)

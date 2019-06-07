@@ -61,8 +61,7 @@ public class TrackController {
         }
         return responseEntity;
     }
-
-    @GetMapping("trackByName/{name}")
+    /*@GetMapping("trackByName/{name}")
     @ApiOperation("Get all tracks with specific name")
     @ApiResponses(value = {@ApiResponse(code = 200,message = "OK",response = Track.class)})
     public ResponseEntity<?> getTrackByName(@PathVariable("name") String name) throws TrackNotFoundException{
@@ -76,8 +75,8 @@ public class TrackController {
         }
         return responseEntity;
     }
-
-    @PutMapping("track")
+*/
+    /*@PutMapping("track")
     @ApiOperation("update track comments")
     @ApiResponses(value = {@ApiResponse(code = 200,message = "OK",response = Track.class)})
     public ResponseEntity<?> updateComments(@RequestBody Track track) throws TrackNotFoundException{
@@ -86,7 +85,7 @@ public class TrackController {
         responseEntity = new ResponseEntity<String>("Track updated", HttpStatus.OK);
         return responseEntity;
     }
-
+*/
     @DeleteMapping("track/{id}")
     @ApiOperation("delete track with specific id")
     @ApiResponses(value = {@ApiResponse(code = 200,message = "OK",response = Track.class)})
