@@ -4,7 +4,6 @@ Muzix Service Application
 - Added custom exceptions
 - Added global exception using @ControllerAdvice
 - Added lombok
-- Added endpoint to search trackByName, added @Query 
 - Added test cases for all layers
 - Added swagger2
 - Implemented mongoDb
