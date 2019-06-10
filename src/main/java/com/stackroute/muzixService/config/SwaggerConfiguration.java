@@ -1,3 +1,7 @@
+/**
+ * This program is used for configuration of swagger2
+ */
+
 package com.stackroute.muzixService.config;
 
 import com.stackroute.muzixService.controller.TrackController;
@@ -13,7 +17,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
-@PropertySource("classpath:swagger.properties")
+@PropertySource("classpath:application.properties")
 @ComponentScan(basePackageClasses = TrackController.class)
 @Configuration
 public class SwaggerConfiguration {

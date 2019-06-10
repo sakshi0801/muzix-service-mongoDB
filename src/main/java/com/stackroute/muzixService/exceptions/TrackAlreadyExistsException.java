@@ -1,3 +1,7 @@
+/**
+ * This is a custom defined exception that is thrown when a track is already present
+ */
+
 package com.stackroute.muzixService.exceptions;
 
 public class TrackAlreadyExistsException extends Exception {

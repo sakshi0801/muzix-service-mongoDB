@@ -1,3 +1,7 @@
+/**
+ * This class is used to test methods to TrackController
+ */
+
 package com.stackroute.muzixService.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +49,6 @@ public class TrackControllerTest {
     public void setUp(){
 
         MockitoAnnotations.initMocks(this);
-        //mockMvc = MockMvcBuilders.standaloneSetup(trackController).build();
         mockMvc = MockMvcBuilders.standaloneSetup(trackController).setControllerAdvice(new TrackExceptionController()).build();
         track = new Track();
         track.setTrackId(1);
@@ -70,7 +73,7 @@ public class TrackControllerTest {
         when(trackService.saveTrack(track)).thenThrow(TrackAlreadyExistsException.class);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/track")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track)))
-                .andExpect(MockMvcResultMatchers.status().isConflict())
+                .andExpect(MockMvcResultMatchers.status().isAlreadyReported())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -96,14 +99,13 @@ public class TrackControllerTest {
 
     @Test
     public void getAllTracksFailure() throws Exception {
-        when(trackService.getAllTracks()).thenReturn(null);
+        when(trackService.getAllTracks()).thenReturn(new ArrayList<>(){});
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/tracks")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
 
-/*
     @Test
     public void getTrackByIdTest() throws Exception{
         when(trackService.getTrackByTrackId(1)).thenReturn(track);
@@ -119,33 +121,10 @@ public class TrackControllerTest {
         when(trackService.getTrackByTrackId(2)).thenThrow(TrackNotFoundException.class);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/track/2")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track)))
-                .andExpect(MockMvcResultMatchers.status().isConflict())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
 
     }
-*/
-
-/*
-    @Test
-    public void getTrackByNameTest() throws Exception{
-        when(trackService.getTrackByName("duniya")).thenReturn(track);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/trackByName/duniya")
-                .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-
-    }
-
-    @Test
-    public void getTrackByNameTestFailure() throws Exception{
-        when(trackService.getTrackByName("duniya sari")).thenThrow(TrackNotFoundException.class);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/trackByName/duniya sari")
-                .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track)))
-                .andExpect(MockMvcResultMatchers.status().isConflict())
-                .andDo(MockMvcResultHandlers.print());
-
-    }
-*/
 
     @Test
     public void deleteTrackTest() throws Exception{
@@ -161,11 +140,10 @@ public class TrackControllerTest {
         when(trackService.deleteTrack(3)).thenThrow(TrackNotFoundException.class);
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/track/3")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track)))
-                .andExpect(MockMvcResultMatchers.status().isConflict())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
 
-/*
     @Test
     public void updateCommentsTest() throws Exception{
         when(trackService.updateComments(track)).thenReturn(track);
@@ -181,8 +159,7 @@ public class TrackControllerTest {
         when(trackService.updateComments(track1)).thenThrow(TrackNotFoundException.class);
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/track")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track1)))
-                .andExpect(MockMvcResultMatchers.status().isConflict())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
-*/
 }

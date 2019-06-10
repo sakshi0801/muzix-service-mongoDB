@@ -1,3 +1,7 @@
+/**
+ * This class is used to test methods of TrackService
+ */
+
 package com.stackroute.muzixService.service;
 
 import com.stackroute.muzixService.domain.Track;
@@ -11,6 +15,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +35,10 @@ public class TrackServiceTest {
     private TrackServiceImpl trackService;
     List<Track> tracks=null;
 
-    Optional optional;
+    @Autowired
+    private Environment environment;
+    private Optional optional;
+
     @Before
     public void setup(){
         MockitoAnnotations.initMocks(this);//initializes mock object
@@ -65,81 +74,63 @@ public class TrackServiceTest {
     }
 
     @Test
-    public void getAllTracksTestSuccess(){
-
+    public void getAllTracksTestSuccess() throws TrackNotFoundException {
         trackRepository.save(track);
         when(trackRepository.findAll()).thenReturn(tracks);
-
         List<Track> list=trackService.getAllTracks();
-
         Assert.assertEquals(tracks,list);
     }
 
-    @Test
-    public void getAllTracksTestfailure(){
+    @Test(expected = TrackNotFoundException.class)
+    public void getAllTracksTestfailure() throws TrackNotFoundException {
         trackRepository.save(track);
-        when(trackRepository.findAll()).thenReturn(null);
+        when(trackRepository.findAll()).thenReturn(new ArrayList<Track>(){});
         List<Track> list=trackService.getAllTracks();
         Assert.assertNotEquals(tracks,list);
     }
 
-/*
     @Test
     public void getTrackByIdtest() throws TrackNotFoundException {
-        trackRepository.save(track);
-        Track track1=null;
-        when(trackRepository.getOne(1)).thenReturn(track1);
+        when(trackRepository.save(track)).thenReturn(track);
+        when(trackRepository.existsById(track.getTrackId())).thenReturn(true);
+        when(trackRepository.findById(track.getTrackId())).thenReturn(optional);
+        Track track1=(Track) optional.get();
         Track getTrack=trackService.getTrackByTrackId(track.getTrackId());
         Assert.assertEquals(track1,getTrack);
     }
-*/
 
-  /*  @Test
-    public void getTrackBynameTest() throws TrackNotFoundException {
-        when(trackRepository.getTrackByName("duniya")).thenReturn(track);
-        Track foundTrack=trackService.getTrackByName("duniya");
-        Assert.assertEquals(track,foundTrack);
-    }
-*/
-    /*@Test
-    public void getTrackBynameTestFailure() throws TrackNotFoundException {
-        when(trackRepository.getTrackByName("duniya")).thenReturn(track);
-        Track foundTrack=trackService.getTrackByName("duniya dari");
-        Assert.assertNotEquals(track,foundTrack);
-    }
-*/
     @Test
     public void deleteTrackTest() throws TrackNotFoundException {
-
         when(trackRepository.findById(1)).thenReturn(optional);
         List<Track> actualList=trackService.deleteTrack(track.getTrackId());
         Assert.assertEquals(false,actualList.contains(track));
     }
 
-    @Test
+    @Test(expected = TrackNotFoundException.class)
     public void deleteTrackTestFailure() throws TrackNotFoundException {
-        when(trackRepository.findById(1)).thenReturn(optional);
+        when(trackRepository.findById(10)).thenReturn(optional);
         List<Track> actualList=trackService.deleteTrack(track.getTrackId());
         Assert.assertNotEquals(true,actualList.contains(track));
     }
 
-    /*@Test
+    @Test
     public void updateCommentsTest() throws TrackNotFoundException {
-        when(trackRepository.getOne(1)).thenReturn(track);
         when(trackRepository.existsById(1)).thenReturn(true);
+        when(trackRepository.findById(1)).thenReturn(optional);
         when(trackRepository.save(track)).thenReturn(track);
         Track updateTrack=new Track(1,"duniya","abcd");
         Track actualTrack=trackService.updateComments(updateTrack);
         Assert.assertEquals(updateTrack,actualTrack);
     }
-*/
-    /*@Test
+
+    @Test(expected = TrackNotFoundException.class)
     public void updateCommentsTestFailure() throws TrackNotFoundException {
-        when(trackRepository.getOne(1)).thenReturn(track);
-        when(trackRepository.existsById(1)).thenReturn(true);
         when(trackRepository.save(track)).thenReturn(track);
-        Track updateTrack=new Track(1,"duniya dari","abcd");
+        when(trackRepository.existsById(track.getTrackId())).thenReturn(true);
+        when(trackRepository.findById(track.getTrackId())).thenReturn(optional);
+        Track updateTrack=new Track(10,"duniya dari","abcd");
+        track.setComments(updateTrack.getComments());
         Track actualTrack=trackService.updateComments(updateTrack);
         Assert.assertNotEquals(updateTrack,actualTrack);
-    }*/
+    }
 }

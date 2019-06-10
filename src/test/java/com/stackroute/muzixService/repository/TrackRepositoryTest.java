@@ -1,3 +1,7 @@
+/**
+ * This class is used to test methods of TrackRepository
+ */
+
 package com.stackroute.muzixService.repository;
 
 import com.stackroute.muzixService.domain.Track;
@@ -88,21 +92,6 @@ public class TrackRepositoryTest {
         Track foundTrack=trackRepository.findById(1).get();
         Assert.assertNotEquals(2,foundTrack.getTrackId());
     }
-
-    /*@Test
-    public void testGetTrackByName(){
-        trackRepository.save(track);
-        Track foundTrack=trackRepository.getTrackByName("duniya");
-
-        Assert.assertEquals(track,foundTrack);
-    }
-
-    @Test
-    public void testGetTrackByNameFailure(){
-        trackRepository.save(track);
-        Track foundTrack=trackRepository.getTrackByName("duniya");
-        Assert.assertNotEquals(2,foundTrack.getTrackId());
-    }*/
 
     @Test
     public void testDeleteTrack(){

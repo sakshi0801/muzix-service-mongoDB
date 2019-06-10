@@ -1,3 +1,7 @@
+/**
+ * This class is used to provide seed data in the application using ApplicationListener interface
+ */
+
 package com.stackroute.muzixService.startup;
 
 import com.stackroute.muzixService.domain.Track;
@@ -33,6 +37,5 @@ public class ApplicationListenerStartup implements ApplicationListener<ContextRe
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         Track track1=new Track(trackId,trackName,comments);
         trackRepository.save(track1);
-
     }
 }
